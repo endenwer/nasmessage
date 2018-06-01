@@ -5,4 +5,5 @@
 /resources/public/js
 /*-init.clj
 /*.log
+/node_modules
 out

@@ -27,7 +27,7 @@
                    [com.cemerick/piggieback "0.2.1"]
                    [binaryage/devtools "0.8.2"]]
 
-    :plugins      [[lein-figwheel "0.5.14"]
+    :plugins      [[lein-figwheel "0.5.17-SNAPSHOT"]
                    [lein-doo "0.1.7"]]}}
 
   :cljsbuild
@@ -36,6 +36,9 @@
      :source-paths ["src/cljs"]
      :figwheel     {:on-jsload "nas-message.core/reload"}
      :compiler     {:main                 nas-message.core
+                    :foreign-libs         [{:file "vendor_js/nebPay.js"
+                                            :file-min "vendor_js/nebPay.min.js"
+                                            :provides ["vendor.nebpay"]}]
                     :optimizations        :none
                     :output-to            "resources/public/js/app.js"
                     :output-dir           "resources/public/js/dev"
@@ -51,6 +54,11 @@
     {:id           "min"
      :source-paths ["src/cljs"]
      :compiler     {:main            nas-message.core
+                    :foreign-libs    [{:file "vendor_js/nebPay.js"
+                                       :file-min "vendor_js/nebPay.min.js"
+                                       :provides ["vendor.nebpay"]}]
+                    :npm-deps        {:nebpay.js "0.1.0"}
+                    :install-deps    true
                     :optimizations   :advanced
                     :output-to       "resources/public/js/app.js"
                     :output-dir      "resources/public/js/min"
@@ -61,6 +69,9 @@
     {:id           "test"
      :source-paths ["src/cljs" "test/cljs"]
      :compiler     {:output-to     "resources/public/js/test.js"
+                    :foreign-libs  [{:file "vendor_js/nebPay.js"
+                                     :file-min "vendor_js/nebPay.min.js"
+                                     :provides ["vendor.nebpay"]}]
                     :output-dir    "resources/public/js/test"
                     :main          nas-message.runner
                     :optimizations :none}}

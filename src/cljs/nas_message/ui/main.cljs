@@ -1,6 +1,11 @@
 (ns nas-message.ui.main
-  (:require [keechma.ui-component :as ui]
-            [keechma.toolbox.ui :refer [sub> <cmd]]))
+  (:require
+   vendor.nebpay
+   [keechma.ui-component :as ui]
+   [keechma.toolbox.ui :refer [sub> <cmd]]))
+
+(def nebpay (js/require "nebpay"))
+(.log js/console (nebpay.))
 
 (defn render [ctx]
   [:div
