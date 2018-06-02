@@ -3,13 +3,15 @@
                  [org.clojure/clojurescript "1.10.238"]
                  [reagent "0.7.0"]
                  [keechma "0.3.6"]
-                 [keechma/toolbox "0.1.13"]]
+                 [keechma/toolbox "0.1.13"]
+                 [garden "1.3.5"]]
 
   :min-lein-version "2.5.3"
 
   :source-paths ["src/clj"]
 
-  :plugins [[lein-cljsbuild "1.1.7"]]
+  :plugins [[lein-cljsbuild "1.1.7"]
+            [lein-garden "0.3.0"]]
 
   :clean-targets ^{:protect false} ["resources/public/js"
                                     "target"
@@ -17,8 +19,15 @@
 
   :figwheel {:css-dirs ["resources/public/css"]}
 
-
   :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
+
+  :garden {:builds
+           [{:id "screen"
+             :source-paths ["src/garden"]
+             :stylesheet nas-message.core/main
+             :compiler {:output-to "resources/public/css/main.css"
+                        :vendors ["moz" "webkit"]
+                        :auto-prefix #{:keyframes :animation}}}]}
 
   :profiles
   {:dev
@@ -57,8 +66,6 @@
                     :foreign-libs    [{:file "vendor_js/nebPay.js"
                                        :file-min "vendor_js/nebPay.min.js"
                                        :provides ["vendor.nebpay"]}]
-                    :npm-deps        {:nebpay.js "0.1.0"}
-                    :install-deps    true
                     :optimizations   :advanced
                     :output-to       "resources/public/js/app.js"
                     :output-dir      "resources/public/js/min"

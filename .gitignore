@@ -6,4 +6,5 @@
 /*-init.clj
 /*.log
 /node_modules
+/resources/public/css/main.css
 out
