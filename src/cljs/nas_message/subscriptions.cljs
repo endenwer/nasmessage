@@ -10,4 +10,5 @@
      (get-in @app-db-atom (flatten [:kv key])))))
 
 (def subscriptions
-  {:counter (get-kv :counter)})
+  {:message (get-kv :message)
+   :modal-open? (get-kv :modal-open?)})

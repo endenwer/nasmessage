@@ -1,5 +1,5 @@
 (ns nas-message.controllers
-  (:require [nas-message.controllers.counter :as counter]))
+  (:require [nas-message.controllers.main :as c-main]))
 
 (def controllers
-  (-> {:counter counter/controller}))
+  (-> {:main c-main/controller}))

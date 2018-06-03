@@ -1,7 +1,7 @@
 (defproject nas-message "0.1.0-SNAPSHOT"
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [org.clojure/clojurescript "1.10.238"]
-                 [reagent "0.7.0"]
+                 [reagent "0.8.1"]
                  [keechma "0.3.6"]
                  [keechma/toolbox "0.1.13"]
                  [garden "1.3.5"]]

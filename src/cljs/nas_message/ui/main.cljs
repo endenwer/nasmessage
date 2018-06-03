@@ -7,12 +7,25 @@
 (def nebpay (js/require "nebpay"))
 (.log js/console (nebpay.))
 
+(defn message-render
+  [message]
+  [:div.message message])
+
+(defn new-message-button-render
+  [ctx]
+  [:button.new-message-btn {:on-click #(<cmd ctx :open-modal)} "Place your message"])
+
+(defn modal-render
+  [ctx]
+  [:div "Hello"])
+
 (defn render [ctx]
-  [:div
-   [:button {:on-click #(<cmd ctx :update :dec)} "Decrement"]
-   [:button {:on-click #(<cmd ctx :update :inc)} "Increment"]
-   [:p (str "Count: " (sub> ctx :counter))]])
+  [:<>
+   [:div.app-container
+    [message-render (sub> ctx :message)]
+    [new-message-button-render ctx]]
+   (when (sub> ctx :modal-open?) [modal-render])])
 
 (def component (ui/constructor {:renderer render
-                                :topic :counter
-                                :subscription-deps [:counter]}))
+                                :topic :main
+                                :subscription-deps [:message :modal-open?]}))
