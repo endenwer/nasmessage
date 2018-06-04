@@ -4,7 +4,8 @@
                  [reagent "0.8.1"]
                  [keechma "0.3.6"]
                  [keechma/toolbox "0.1.13"]
-                 [garden "1.3.5"]]
+                 [garden "1.3.5"]
+                 [antizer "0.2.2"]]
 
   :min-lein-version "2.5.3"
 
@@ -32,7 +33,7 @@
   :profiles
   {:dev
    {:dependencies [
-                   [figwheel-sidecar "0.5.10"]
+                   [figwheel-sidecar "0.5.17-SNAPSHOT"]
                    [com.cemerick/piggieback "0.2.1"]
                    [binaryage/devtools "0.8.2"]]
 
