@@ -35,11 +35,13 @@
      [:div.form-section
       [:label.message-input-label (str "Your message (" (count @new-message) " of 140)")]
       [ant/input-text-area {:class "message-input"
+                            :autosize {:max-rows 4 :min-rows 4}
                             :on-change #(reset! new-message (.-value (.-target %)))
                             :value @new-message
                             :placeholder "Input your message"}]
-      [ant/button {:class "cancel-btn" :size "large"} "Cancel"]
-      [ant/button {:class "submit-btn" :size "large" :tyle "primary"} "Submit"]]
+      [ant/input {:class "amount-input" :addon-before "NAS amount:"}]
+      [ant/slider {:class "amount-slider"}]
+      [ant/button {:class "submit-btn" :size "large" :type "primary"} "Submit"]]
      [:div.modal-footer
       [:span "footer"]]]))
 

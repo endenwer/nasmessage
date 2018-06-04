@@ -51,28 +51,26 @@
                     :padding "15px"
                     :display :grid
                     :grid-gap "10px"
-                    :grid-template-rows "20px auto auto"
-                    :grid-template-columns "1fr 1fr"
-                    :grid-template-areas (str "'message-input-label message-input-label'"
-                                              "'message-input message-input'"
-                                              "'cancel submit'")}
+                    :grid-template-rows "20px auto auto 30px auto"
+                    :grid-template-columns "1fr"
+                    :grid-template-areas (str "'message-input-label'"
+                                              "'message-input'"
+                                              "'amount-input'"
+                                              "'slider'"
+                                              "'submit'")}
+    [:.amount-input {:grid-area "amount-input"
+                     :height "40px"
+                     :font-size "17px !important"}]
+    [:.ant-input-group-addon {:font-size "17px"}]
+    [:.amount-slider {:grid-area "slider"}]
     [:button {:height "50px"
               :font-size "17px"}]
     [:.message-input-label {:grid-area "message-input-label"
                             :font-size "17px"}]
     [:.message-input {:grid-area "message-input"
-                      :border-radius "5px"
-                      :border "2px solid #e8ebed"
-                      :transition ".2s"
-                      :padding "12px 15px"
-                      :font-size "1.2em"
-                      :outline 0}
-     [:&:focus {:border "2px solid #d4d9dd"}]]
+                      :font-size "17px"}]
     [:.cancel-btn {:grid-area "cancel"}]
-    [:.submit-btn {:grid-area "submit"
-                   :color "#fff"
-                   :background "#5fcf80"
-                   :border "2px solid #5fcf80"}]]
+    [:.submit-btn {:grid-area "submit"}]]
    [:.modal-footer {:grid-area :footer
                     :display :grid
                     :justify-content :center
