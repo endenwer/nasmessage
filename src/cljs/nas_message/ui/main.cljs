@@ -34,7 +34,6 @@
                               (fn [e]
                                 (message-form/set-path  path (.-value (.-target e)) form-data-atom)
                                 (when-not @(f/is-valid-path? form path) (f/validate! form true))))]
-      (.log js/console @(f/is-valid-path? form [:new-message]))
       [:div.modal
        [:div.close-btn
         [ant/icon {:type :close :on-click #(<cmd ctx :close-modal)}]]
