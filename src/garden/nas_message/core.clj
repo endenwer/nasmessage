@@ -21,7 +21,14 @@
 
 ;; app styles
 
+(defstyles form-styles
+  [:.has-error {:border-color "#f5222d"}
+   [:&:focus {:border-color "#f5222d"
+              :box-shadow "0 0 0 2px rgba(245,34,45,.2)"}]
+   ["&:not([disabled]):hover" {:border-color "#f5222d"}]])
+
 (defstyles modal-styles
+  form-styles
   [:.modal {:position :absolute
             :display :grid
             :grid-gap "15px 0"
@@ -51,18 +58,18 @@
                     :padding "15px"
                     :display :grid
                     :grid-gap "10px"
-                    :grid-template-rows "20px auto auto 30px auto"
+                    :grid-template-rows "20px auto auto auto"
                     :grid-template-columns "1fr"
                     :grid-template-areas (str "'message-input-label'"
                                               "'message-input'"
                                               "'amount-input'"
-                                              "'slider'"
-                                              "'submit'")}
+                                              "'submit'"
+                                              "'return-funds'")}
+    [:.return-funds-btn {:grid-area "return-funds"}]
     [:.amount-input {:grid-area "amount-input"
                      :height "40px"
                      :font-size "17px !important"}]
     [:.ant-input-group-addon {:font-size "17px"}]
-    [:.amount-slider {:grid-area "slider"}]
     [:button {:height "50px"
               :font-size "17px"}]
     [:.message-input-label {:grid-area "message-input-label"

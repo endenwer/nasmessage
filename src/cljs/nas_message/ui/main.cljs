@@ -1,13 +1,11 @@
 (ns nas-message.ui.main
   (:require
-   vendor.nebpay
    [keechma.ui-component :as ui]
    [keechma.toolbox.ui :refer [sub> <cmd]]
    [antizer.reagent :as ant]
-   [reagent.core :as r]))
-
-(def nebpay (js/require "nebpay"))
-(.log js/console (nebpay.))
+   [reagent.core :as r]
+   [nas-message.message-form :as message-form]
+   [forms.core :as f]))
 
 (defn message-render
   [message]
@@ -27,23 +25,43 @@
 
 (defn modal-render
   [ctx]
-  (r/with-let [new-message (r/atom nil)]
-    [:div.modal
-     [:div.close-btn
-      [ant/icon {:type :close :on-click #(<cmd ctx :close-modal)}]]
-     [description-section-render]
-     [:div.form-section
-      [:label.message-input-label (str "Your message (" (count @new-message) " of 140)")]
-      [ant/input-text-area {:class "message-input"
-                            :autosize {:max-rows 4 :min-rows 4}
-                            :on-change #(reset! new-message (.-value (.-target %)))
-                            :value @new-message
-                            :placeholder "Input your message"}]
-      [ant/input {:class "amount-input" :addon-before "NAS amount:"}]
-      [ant/slider {:class "amount-slider"}]
-      [ant/button {:class "submit-btn" :size "large" :type "primary"} "Submit"]]
-     [:div.modal-footer
-      [:span "footer"]]]))
+  (r/with-let [form (message-form/form {:amount "" :new-message ""})]
+    (let [form-data-atom (f/data form)
+          form-data @form-data-atom
+          new-message (:new-message form-data)
+          amount (:amount form-data)
+          on-change-handler (fn [path]
+                              (fn [e]
+                                (message-form/set-path  path (.-value (.-target e)) form-data-atom)
+                                (when-not @(f/is-valid-path? form path) (f/validate! form true))))]
+      (.log js/console @(f/is-valid-path? form [:new-message]))
+      [:div.modal
+       [:div.close-btn
+        [ant/icon {:type :close :on-click #(<cmd ctx :close-modal)}]]
+       [description-section-render]
+       [:div.form-section
+        [:label.message-input-label (str "Your message (" (count new-message) " of 140)")]
+        [ant/input-text-area {:class (str "message-input "
+                                          (when-not @(f/is-valid-path? form [:new-message])
+                                            "has-error"))
+                              :autosize {:max-rows 4 :min-rows 4}
+                              :on-blur #(f/validate! form true)
+                              :on-change (on-change-handler [:new-message])
+                              :value new-message
+                              :placeholder "Input your message"}]
+        [ant/input {:class (str "amount-input "
+                                (when-not @(f/is-valid-path? form [:amount]) "has-error"))
+                    :value amount
+                    :on-blur #(f/validate! form true)
+                    :on-change (on-change-handler [:amount])
+                    :addon-before "NAS amount (min 0.0001 NAS)"}]
+        [ant/button {:class "submit-btn"
+                     :size "large"
+                     :type "primary"
+                     :on-click #(f/validate! form)} "Submit"]
+        [ant/button {:class "retunr-funds-btn" :size "large"} "Return funds"]]
+       [:div.modal-footer
+        [:span "footer"]]])))
 
 (defn render [ctx]
   [:div.app-container
