@@ -2,4 +2,4 @@
   (:require [nas-message.controllers.main :as c-main]))
 
 (def controllers
-  (-> {:main c-main/controller}))
+  (-> {:main (c-main/->Controller)}))
