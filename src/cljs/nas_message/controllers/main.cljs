@@ -1,7 +1,8 @@
 (ns nas-message.controllers.main
   (:require [keechma.toolbox.pipeline.core :as pp :refer-macros [pipeline!]]
             [keechma.toolbox.pipeline.controller :as pp-controller]
-            [nas-message.api :as api]))
+            [nas-message.api :as api]
+            [antizer.reagent :as ant]))
 
 (defn update-counter-value [action app-db]
   (let [current (or (get-in app-db [:kv :counter]) 0)
@@ -39,5 +40,12 @@
     :open-modal (pipeline! [value app-db]
                            (pp/commit! (open-modal app-db)))
     :close-modal (pipeline! [value app-db]
-                            (pp/commit! (close-modal app-db)))}))
+                            (pp/commit! (close-modal app-db)))
+    :set-message (pipeline! [value app-db]
+                            (api/set-message value)
+                            (ant/message-success
+                             "Your message was submitted. It will appear here in a few seconds." 8)
+                            (pp/rescue! [error]
+                                        (ant/message-error "Your transaction was rejected." 8)))}))
+
 

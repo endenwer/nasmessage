@@ -53,12 +53,16 @@
                     :value amount
                     :on-blur #(f/validate! form true)
                     :on-change (on-change-handler [:amount])
-                    :addon-before "NAS amount (min 0.0001 NAS)"}]
+                    :addon-before (str "NAS amount (min " (sub> ctx :paid-amount) " NAS)")}]
         [ant/button {:class "submit-btn"
                      :size "large"
                      :type "primary"
-                     :on-click #(f/validate! form)} "Submit"]
-        [ant/button {:class "retunr-funds-btn" :size "large"} "Return funds"]]
+                     :on-click (fn []
+                                 (f/validate! form)
+                                 (when @(f/is-valid? form)
+                                   (<cmd ctx :set-message {:message new-message :amount amount})))}
+         "Submit"]
+        [ant/button {:class "return-funds-btn" :size "large"} "Return funds"]]
        [:div.modal-footer
         [:span "footer"]]])))
 
@@ -70,4 +74,4 @@
 
 (def component (ui/constructor {:renderer render
                                 :topic :main
-                                :subscription-deps [:message :modal-open?]}))
+                                :subscription-deps [:message :modal-open? :paid-amount]}))
