@@ -25,7 +25,8 @@
     (ant/message-info "Message changed"))
   (-> app-db
       (assoc-in [:kv :message] (:message current-state))
-      (assoc-in [:kv :paid-amount] (:paidAmount current-state))
+      (assoc-in [:kv :paid-amount] (or (js/parseFloat (:paidAmount current-state)) 0))
+      (assoc-in [:kv :amount-step] (js/parseFloat (:amountStep current-state)))
       (assoc-in [:kv :message-loaded?] true)))
 
 (def pipelines

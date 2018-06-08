@@ -5,7 +5,7 @@
 
 (def nebpay (js/require "nebpay"))
 (def nebpay-instance (nebpay.))
-(def contract-address "n1uQNUCWU5KbQckvuvx43qsArPsLV23DDjB")
+(def contract-address "n21fVsHG8BuubBggHPm7rk2wJTMekc9KJ5r")
 (def default-options {:callback (.-testnetUrl (.-config nebpay))})
 
 (defn get-current-state []

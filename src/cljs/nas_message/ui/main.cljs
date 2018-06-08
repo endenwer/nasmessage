@@ -5,7 +5,8 @@
    [antizer.reagent :as ant]
    [reagent.core :as r]
    [nas-message.message-form :as message-form]
-   [forms.core :as f]))
+   [forms.core :as f]
+   [clojure.string :as string]))
 
 (defn message-render
   [message]
@@ -25,10 +26,13 @@
 
 (defn modal-render
   [ctx]
-  (r/with-let [form (message-form/form {:amount "" :new-message ""})]
+  (r/with-let [form (message-form/form {:amount 0 :new-message ""})]
     (let [form-data-atom (f/data form)
           form-data @form-data-atom
           new-message (:new-message form-data)
+          paid-amount (sub> ctx :paid-amount)
+          amount-step (sub> ctx :amount-step)
+          min-amount (.toFixed (+ paid-amount amount-step) 5)
           amount (:amount form-data)
           on-change-handler (fn [path]
                               (fn [e]
@@ -51,9 +55,16 @@
         [ant/input {:class (str "amount-input "
                                 (when-not @(f/is-valid-path? form [:amount]) "has-error"))
                     :value amount
-                    :on-blur #(f/validate! form true)
+                    :on-blur (fn [e]
+                               (let [value (js/parseFloat
+                                            (string/replace (.-value (.-target e)) #"," "."))]
+                                 (message-form/set-path
+                                  [:amount]
+                                  (if (or (< value min-amount) (js/isNaN value)) min-amount value)
+                                  form-data-atom))
+                               (f/validate! form true))
                     :on-change (on-change-handler [:amount])
-                    :addon-before (str "NAS amount (min " (sub> ctx :paid-amount) " NAS)")}]
+                    :addon-before (str "NAS amount (min " (js/parseFloat min-amount) " NAS)")}]
         [ant/button {:class "submit-btn"
                      :size "large"
                      :type "primary"
@@ -79,6 +90,7 @@
 (def component (ui/constructor {:renderer render
                                 :topic :main
                                 :subscription-deps [:message
+                                                    :amount-step
                                                     :checking-funds?
                                                     :modal-open?
                                                     :paid-amount]}))

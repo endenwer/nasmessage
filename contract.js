@@ -25,13 +25,19 @@ var NasMessageContract = function () {
 
 NasMessageContract.prototype = {
   init: function () {
-    this.amountStep = new BigNumber(0.000001);
+    this.amountStep = this._toWei(0.00001);
     this.paidAmount = new BigNumber(0);
+  },
+
+  _toWei: function(value) {
+    var data = new BigNumber(value);
+    var one_nas = new BigNumber(Math.pow(10, 18));
+    return one_nas.times(data);
   },
 
   _toNas: function(value) {
     var data = new BigNumber(value);
-    var one_nas = new BigNumber(10 * Math.pow(10, 18));
+    var one_nas = new BigNumber(Math.pow(10, 18));
     return data.dividedBy(one_nas);
   },
 
@@ -47,8 +53,8 @@ NasMessageContract.prototype = {
     return true;
   },
 
-  _validateNasAmount: function(nasAmount) {
-    if(nasAmount.lessThan(this.paidAmount.plus(this.amountStep))) {
+  _validateAmount: function(amount) {
+    if(amount.lessThan(this.paidAmount.plus(this.amountStep))) {
       throw new Error("Invalid payment amount");
     }
 
@@ -59,7 +65,8 @@ NasMessageContract.prototype = {
     return {
       message:     this.message,
       sender:      this.sender,
-      paidAmount:  this._toNas(this.paidAmount)
+      paidAmount:  this._toNas(this.paidAmount),
+      amountStep:  this._toNas(this.amountStep)
     };
   },
 
@@ -71,7 +78,7 @@ NasMessageContract.prototype = {
     }
 
     this._validateMessage(newMessage);
-    this._validateNasAmount(Blockchain.transaction.value);
+    this._validateAmount(Blockchain.transaction.value);
 
     if(this.sender) {
       this.returnFunds();
