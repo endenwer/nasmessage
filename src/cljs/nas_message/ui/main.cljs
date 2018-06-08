@@ -9,8 +9,10 @@
    [clojure.string :as string]))
 
 (defn message-render
-  [message]
-  [:div.message message])
+  [message paid-amount]
+  [:div.message
+   [:div.message-body message]
+   [:div.message-paid-amount (str "Rented for " paid-amount " NAS")]])
 
 (defn new-message-button-render
   [ctx]
@@ -85,7 +87,7 @@
   [:div.app-container
    (if (sub> ctx :message-loaded?)
      [:<>
-      [message-render (sub> ctx :message)]
+      [message-render (sub> ctx :message) (sub> ctx :paid-amount)]
       [new-message-button-render ctx]]
      [ant/spin {:size :large}])
    (when (sub> ctx :modal-open?) [modal-render ctx])])

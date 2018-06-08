@@ -90,15 +90,26 @@
                     :margin-bottom "10px"}]])
 
 (defstyles message-styles
-  [:.message {:font-size "3em"
-              :color "#fff"
-              :font-weight "800"
-              :text-shadow "1px 1px 1px rgba(0,0,0,0.3)"
+  [:.message {:display :grid
               :width "66%"
-              :text-align :center}])
+              :justify-items :center}
+   [:.message-body {:font-size "2em"
+                    :color "#fff"
+                    :font-weight "800"
+                    :text-shadow "1px 1px 1px rgba(0,0,0,0.3)"
+                    :text-align :center}]
+   [:.message-paid-amount {:color "rgba(255,255,255,0.5)"
+                           :font-weight :bold
+                           :text-align :center}]])
 
 (defstyles new-message-btn-styles
-  [:.new-message-btn {:margin-bottom "50px"}])
+  [:.new-message-btn {:margin-bottom "50px"
+                      :border "2px solid rgba(255, 255, 255, 0.4)"
+                      :color "rgba(255, 255, 255, 0.4)"}
+   [:&:active {:border-color "rgba(255, 255, 255, 0.8)"
+               :color "rgba(255, 255, 255, 0.8)"}]
+   [:&:hover :&:focus {:border-color "#fff"
+                       :color "#fff"}]])
 
 (defstyles app-styles
   modal-styles
