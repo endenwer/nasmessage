@@ -12,4 +12,5 @@
 (def subscriptions
   {:message (get-kv :message)
    :paid-amount (get-kv :paid-amount)
-   :modal-open? (get-kv :modal-open?)})
+   :modal-open? (get-kv :modal-open?)
+   :checking-funds? (get-kv :checking-funds?)})

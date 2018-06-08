@@ -36,6 +36,15 @@
                           (pp/commit! (open-modal app-db)))
    :close-modal (pipeline! [value app-db]
                            (pp/commit! (close-modal app-db)))
+   :return-funds (pipeline! [value app-db]
+                            (pp/commit! (assoc-in app-db [:kv :checking-funds?] true))
+                            (api/return-funds {:simulate-call? true})
+                            (if (= value "true")
+                              (pipeline! [value app-db]
+                                         (api/return-funds {:simulate-call? false})
+                                         (ant/message-success "Your funds was returned."))
+                              (ant/message-error "You don't have funds to return."))
+                            (pp/commit! (assoc-in app-db [:kv :checking-funds?] false)))
    :set-message (pipeline! [value app-db]
                            (api/set-message value)
                            (ant/message-success

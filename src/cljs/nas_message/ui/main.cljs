@@ -62,7 +62,11 @@
                                  (when @(f/is-valid? form)
                                    (<cmd ctx :set-message {:message new-message :amount amount})))}
          "Submit"]
-        [ant/button {:class "return-funds-btn" :size "large"} "Return funds"]]
+        [ant/button {:class "return-funds-btn"
+                     :size "large"
+                     :loading (sub> ctx :checking-funds?)
+                     :on-click #(<cmd ctx :return-funds)}
+         "Return funds"]]
        [:div.modal-footer
         [:span "footer"]]])))
 
@@ -74,4 +78,7 @@
 
 (def component (ui/constructor {:renderer render
                                 :topic :main
-                                :subscription-deps [:message :modal-open? :paid-amount]}))
+                                :subscription-deps [:message
+                                                    :checking-funds?
+                                                    :modal-open?
+                                                    :paid-amount]}))

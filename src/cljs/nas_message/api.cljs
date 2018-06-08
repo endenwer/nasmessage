@@ -36,5 +36,22 @@
               (.stringify js/JSON (clj->js [message]))
               (clj->js options))))))
 
-(defn return-funds [])
+(defn return-funds
+  [{:keys [simulate-call?]}]
+  (p/promise
+   (fn [resolve reject]
+     (let [options (assoc default-options :listener #(resolve (.-result %)))]
+       (if simulate-call?
+         (.simulateCall nebpay-instance
+                        contract-address
+                        0
+                        "returnFunds"
+                        nil
+                        (clj->js options))
+         (.call nebpay-instance
+                contract-address
+                0
+                "returnFunds"
+                nil
+                (clj->js options)))))))
 
