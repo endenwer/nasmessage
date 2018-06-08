@@ -1,6 +1,11 @@
 (ns nas-message.core
   (:require [garden.def :refer [defstyles defkeyframes]]))
 
+;; ant styles
+
+(defstyles ant-styles
+  [:.ant-spin-dot [:i {:background-color "#fff"}]])
+
 ;; body styles
 
 (defkeyframes gradient
@@ -99,6 +104,11 @@
   modal-styles
   message-styles
   new-message-btn-styles
+  [:#app {:display :grid
+          :align-items :center
+          :justify-items :center
+          :width  "100vw"
+          :height "100vh"}]
   [:.app-container {:display :grid
                     :grid-template-rows "1fr auto";
                     :align-items :center
@@ -109,5 +119,6 @@
 ;; main styles
 
 (defstyles main
+  ant-styles
   body-styles
   app-styles)

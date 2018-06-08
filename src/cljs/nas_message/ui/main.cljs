@@ -83,13 +83,17 @@
 
 (defn render [ctx]
   [:div.app-container
-   [message-render (sub> ctx :message)]
-   [new-message-button-render ctx]
+   (if (sub> ctx :message-loaded?)
+     [:<>
+      [message-render (sub> ctx :message)]
+      [new-message-button-render ctx]]
+     [ant/spin {:size :large}])
    (when (sub> ctx :modal-open?) [modal-render ctx])])
 
 (def component (ui/constructor {:renderer render
                                 :topic :main
                                 :subscription-deps [:message
+                                                    :message-loaded?
                                                     :amount-step
                                                     :checking-funds?
                                                     :modal-open?

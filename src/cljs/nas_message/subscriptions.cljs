@@ -14,4 +14,5 @@
    :paid-amount (get-kv :paid-amount)
    :modal-open? (get-kv :modal-open?)
    :amount-step (get-kv :amount-step)
-   :checking-funds? (get-kv :checking-funds?)})
+   :checking-funds? (get-kv :checking-funds?)
+   :message-loaded? (get-kv :message-loaded?)})
