@@ -86,6 +86,8 @@
                           :text-align :center}]]
    [:.modal-footer {:grid-area :footer
                     :display :grid
+                    :grid-gap "0 40px"
+                    :grid-template-columns "repeat(3, auto)"
                     :justify-content :center
                     :align-items :end
                     :color "#b5b5b5"

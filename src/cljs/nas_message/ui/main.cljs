@@ -96,7 +96,9 @@
            [:span "WebExtensionWallet is not installed, please install it first "]
            [:a {:href "https://github.com/ChengOrangeJu/WebExtensionWallet"} "Install Extension"]])]
        [:div.modal-footer
-        [:span "footer"]]])))
+        [:span "© NasMessage"]
+        [:a {:href "https://github.com/endenwer/nasmessage"} "Source code"]
+        [:a {:href "#"} "Smart contract"]]])))
 
 (defn render [ctx]
   [:div.app-container
