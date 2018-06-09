@@ -54,6 +54,7 @@
      :source-paths ["src/cljs"]
      :figwheel     {:on-jsload "nas-message.core/reload"}
      :compiler     {:main                 nas-message.core
+                    :externs ["externs.js"]
                     :foreign-libs         [{:file "vendor_js/nebPay.js"
                                             :file-min "vendor_js/nebPay.min.js"
                                             :provides ["vendor.nebpay"]}]
@@ -72,6 +73,7 @@
     {:id           "min"
      :source-paths ["src/cljs"]
      :compiler     {:main            nas-message.core
+                    :externs ["externs.js"]
                     :foreign-libs    [{:file "vendor_js/nebPay.js"
                                        :file-min "vendor_js/nebPay.min.js"
                                        :provides ["vendor.nebpay"]}]
@@ -90,5 +92,4 @@
                                      :provides ["vendor.nebpay"]}]
                     :output-dir    "resources/public/js/test"
                     :main          nas-message.runner
-                    :optimizations :none}}
-    ]})
+                    :optimizations :none}}]})

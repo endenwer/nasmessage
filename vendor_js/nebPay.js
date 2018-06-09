@@ -6586,3 +6586,7 @@ NebPay.prototype = {
 module.exports = NebPay;
 
 },{"./libs/config":2,"./libs/http":4,"./libs/pay":5,"bignumber.js":7,"extend":10}]},{},[]);
+
+var NebPay = require("nebpay");
+var nebPay = new NebPay();
+

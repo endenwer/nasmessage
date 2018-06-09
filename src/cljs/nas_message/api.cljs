@@ -3,10 +3,9 @@
    vendor.nebpay
    [promesa.core :as p]))
 
-(def nebpay (js/require "nebpay"))
-(def nebpay-instance (nebpay.))
+(def nebpay-instance js/nebPay)
 (def contract-address "n21fVsHG8BuubBggHPm7rk2wJTMekc9KJ5r")
-(def default-options {:callback (.-testnetUrl (.-config nebpay))})
+(def default-options {:callback (.-testnetUrl (.-config js/NebPay))})
 
 (defn get-current-state []
   (p/promise
