@@ -16,9 +16,12 @@
       [:span "WebExtensionWallet is not installed, please install it first "]
       [:br]
       [:a {:href "https://github.com/ChengOrangeJu/WebExtensionWallet"} "Install Extension"]]]
-    [:div.message
-     [:div.message-body message]
-     [:div.message-paid-amount (str "Rented for " paid-amount " NAS")]]))
+    (if (nil? message)
+      [:div.message
+       [:div.message-body "You can place your message here"]]
+      [:div.message
+       [:div.message-body message]
+       [:div.message-paid-amount (str "Rented for " paid-amount " NAS")]])))
 
 (defn new-message-button-render
   [ctx]
