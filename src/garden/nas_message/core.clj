@@ -81,7 +81,9 @@
     [:.message-input {:grid-area "message-input"
                       :font-size "17px"}]
     [:.cancel-btn {:grid-area "cancel"}]
-    [:.submit-btn {:grid-area "submit"}]]
+    [:.submit-btn {:grid-area "submit"}]
+    [:.extension-missing {:color :red
+                          :text-align :center}]]
    [:.modal-footer {:grid-area :footer
                     :display :grid
                     :justify-content :center

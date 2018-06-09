@@ -11,6 +11,7 @@
 
 (def subscriptions
   {:message (get-kv :message)
+   :extension-missing? (get-kv :extension-missing?)
    :paid-amount (get-kv :paid-amount)
    :modal-open? (get-kv :modal-open?)
    :amount-step (get-kv :amount-step)

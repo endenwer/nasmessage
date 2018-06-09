@@ -9,10 +9,16 @@
    [clojure.string :as string]))
 
 (defn message-render
-  [message paid-amount]
-  [:div.message
-   [:div.message-body message]
-   [:div.message-paid-amount (str "Rented for " paid-amount " NAS")]])
+  [message paid-amount extension-missing?]
+  (if extension-missing?
+    [:div.message
+     [:div.message-body
+      [:span "WebExtensionWallet is not installed, please install it first "]
+      [:br]
+      [:a {:href "https://github.com/ChengOrangeJu/WebExtensionWallet"} "Install Extension"]]]
+    [:div.message
+     [:div.message-body message]
+     [:div.message-paid-amount (str "Rented for " paid-amount " NAS")]]))
 
 (defn new-message-button-render
   [ctx]
@@ -68,6 +74,7 @@
                     :on-change (on-change-handler [:amount])
                     :addon-before (str "NAS amount (min " (js/parseFloat min-amount) " NAS)")}]
         [ant/button {:class "submit-btn"
+                     :disabled (sub> ctx :extension-missing?)
                      :size "large"
                      :type "primary"
                      :on-click (fn []
@@ -76,10 +83,15 @@
                                    (<cmd ctx :set-message {:message new-message :amount amount})))}
          "Submit"]
         [ant/button {:class "return-funds-btn"
+                     :disabled (sub> ctx :extension-missing?)
                      :size "large"
                      :loading (sub> ctx :checking-funds?)
                      :on-click #(<cmd ctx :return-funds)}
-         "Return funds"]]
+         "Return funds"]
+        (when (sub> ctx :extension-missing?)
+          [:div.extension-missing
+           [:span "WebExtensionWallet is not installed, please install it first "]
+           [:a {:href "https://github.com/ChengOrangeJu/WebExtensionWallet"} "Install Extension"]])]
        [:div.modal-footer
         [:span "footer"]]])))
 
@@ -87,7 +99,7 @@
   [:div.app-container
    (if (sub> ctx :message-loaded?)
      [:<>
-      [message-render (sub> ctx :message) (sub> ctx :paid-amount)]
+      [message-render (sub> ctx :message) (sub> ctx :paid-amount) (sub> ctx :extension-missing?)]
       [new-message-button-render ctx]]
      [ant/spin {:size :large}])
    (when (sub> ctx :modal-open?) [modal-render ctx])])
@@ -95,6 +107,7 @@
 (def component (ui/constructor {:renderer render
                                 :topic :main
                                 :subscription-deps [:message
+                                                    :extension-missing?
                                                     :message-loaded?
                                                     :amount-step
                                                     :checking-funds?

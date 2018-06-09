@@ -11,15 +11,17 @@
 (defn get-current-state []
   (p/promise
    (fn [resolve reject]
-     (let [options (assoc default-options
-                          :listener #(resolve (js->clj (.parse js/JSON (.-result %))
-                                                       :keywordize-keys true)))]
-       (.simulateCall nebpay-instance
-                      contract-address
-                      0
-                      "getCurrentState"
-                      nil
-                      (clj->js options))))))
+     (if (exists? js/webExtensionWallet)
+       (let [options (assoc default-options
+                            :listener #(resolve (js->clj (.parse js/JSON (.-result %))
+                                                         :keywordize-keys true)))]
+         (.simulateCall nebpay-instance
+                        contract-address
+                        0
+                        "getCurrentState"
+                        nil
+                        (clj->js options)))
+       (reject (js/Error. "missing extension"))))))
 
 (defn set-message
   [{:keys [message amount]}]

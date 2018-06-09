@@ -32,7 +32,10 @@
 (def pipelines
   {:update-contract-state (pipeline! [value app-db]
                                      (api/get-current-state)
-                                     (pp/commit! (update-contract-state app-db value)))
+                                     (pp/commit! (update-contract-state app-db value))
+                                     (pp/rescue! [error]
+                                                 (pp/commit!
+                                                  (assoc-in app-db [:kv :message-loaded?] true))))
    :open-modal (pipeline! [value app-db]
                           (pp/commit! (open-modal app-db)))
    :close-modal (pipeline! [value app-db]
@@ -63,6 +66,7 @@
                                 10000)]
     (controller/execute this :update-contract-state)
     (-> app-db
+        (assoc-in [:kv :extension-missing?] (not (exists? js/webExtensionWallet)))
         (assoc-in [:kv :contract-state-updater] contract-state-updater)
         (assoc-in [:kv :modal-open?] false)
         (assoc-in [:kv :message-loaded?] false))))
