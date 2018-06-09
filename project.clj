@@ -2,8 +2,15 @@
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [org.clojure/clojurescript "1.10.238"]
                  [reagent "0.8.1"]
-                 [keechma "0.3.6"]
-                 [keechma/toolbox "0.1.13" :exclusions [funcool/promesa]]
+                 [keechma "0.3.6" :exclusions [reagent
+                                               cljsjs/react-with-addons
+                                               cljsjs/react-dom
+                                               cljsjs/react-dom-server]]
+                 [keechma/toolbox "0.1.13" :exclusions [funcool/promesa
+                                                        reagent
+                                                        cljsjs/react-with-addons
+                                                        cljsjs/react-dom
+                                                        cljsjs/react-dom-server]]
                  [funcool/promesa "1.8.1"]
                  [garden "1.3.5"]
                  [antizer "0.2.2"]]
