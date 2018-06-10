@@ -103,7 +103,7 @@
        [:div.modal-footer
         [:span "© NasMessage"]
         [:a {:href "https://github.com/endenwer/nasmessage"} "Source code"]
-        [:a {:href "#"} "Smart contract"]]])))
+        [:a {:href "https://explorer.nebulas.io/#/address/n1mAESC2YP2WfccpF68nqEV5dPykZKLjEsb"} "Smart contract"]]])))
 
 (defn render [ctx]
   [:div.app-container
