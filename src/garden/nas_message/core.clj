@@ -57,7 +57,8 @@
    [:.description-section {:grid-area "description"
                            :padding "15px"
                            :border-right "1px solid #e8e8e8"}
-    [:h2 {:margin-top 0}]]
+    [:p {:margin-top "10px"}]
+    [:h2 {:margin 0}]]
    [:.form-section {:grid-area "form"
                     :padding "15px"
                     :display :grid

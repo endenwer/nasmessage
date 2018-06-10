@@ -30,10 +30,15 @@
                :size "large"
                :on-click #(<cmd ctx :open-modal)} "Place your message"])
 
-(defn description-section-render []
+(defn description-section-render
+  [amount-step]
   [:div.description-section
    [:h2 "How it works"]
-   [:p "Aliquam erat volutpat.  Nunc eleifend leo vitae magna.  In id erat non orci commodo lobortis.  Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus.  Sed diam.  Praesent fermentum tempor tellus.  Nullam tempus.  Mauris ac felis vel velit tristique imperdiet.  Donec at pede.  Etiam vel neque nec dui dignissim bibendum.  Vivamus id enim.  Phasellus neque orci, porta a, aliquet quis, semper a, massa.  Phasellus purus.  Pellentesque tristique imperdiet tortor.  Nam euismod tellus id erat."]])
+   [:p (str "You can place a message by paying NAS. "
+            "Your money is stored in a smart contract and you can "
+            "return it any time and your message will be deleted. ")]
+   [:p (str "If someone pays more than you (at least " amount-step " NAS more), "
+            "the message will be changed, and you will receive your NAS back.")]])
 
 (defn modal-render
   [ctx]
@@ -52,7 +57,7 @@
       [:div.modal
        [:div.close-btn
         [ant/icon {:type :close :on-click #(<cmd ctx :close-modal)}]]
-       [description-section-render]
+       [description-section-render (sub> ctx :amount-step)]
        [:div.form-section
         [:label.message-input-label (str "Your message (" (count new-message) " of 140)")]
         [ant/input-text-area {:class (str "message-input "
