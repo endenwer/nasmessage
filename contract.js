@@ -81,7 +81,7 @@ NasMessageContract.prototype = {
     this._validateAmount(Blockchain.transaction.value);
 
     if(this.sender) {
-      this.returnFunds();
+      Blockchain.transfer(this.sender, this.paidAmount);
     }
 
     this.message = newMessage;

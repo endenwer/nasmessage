@@ -4,7 +4,7 @@
    [promesa.core :as p]))
 
 (def nebpay-instance js/nebPay)
-(def contract-address "n1mAESC2YP2WfccpF68nqEV5dPykZKLjEsb")
+(def contract-address "n2359mrLFdb6R9pveCDJcvw7mjy8gjTEscx")
 (def default-options {})
 
 (defn get-current-state []
